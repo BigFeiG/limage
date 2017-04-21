@@ -1,0 +1,43 @@
+
+
+    location /yufei {
+        default_type  text/html;
+        content_by_lua '
+            require "limage"
+            local width,height=image_size("/data/filesystem/files.10000.com/test.jpg")
+                if width and height then
+                        ngx.say(width)
+                        ngx.say(height)
+                end
+            ngx.exit(200)
+
+
+        ';
+    }
+	
+C:\Users\YF>curl -s -v "http://192.168.1.13/yufei"
+* About to connect() to 192.168.1.13 port 80 (#0)
+*   Trying 192.168.1.13...
+* Adding handle: conn: 0xef4020
+* Adding handle: send: 0
+* Adding handle: recv: 0
+* Curl_addHandleToPipeline: length: 1
+* - Conn 0 (0xef4020) send_pipe: 1, recv_pipe: 0
+* Connected to 192.168.1.13 (192.168.1.13) port 80 (#0)
+> GET /yufei HTTP/1.1
+> User-Agent: curl/7.33.0
+> Host: 192.168.1.13
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+* Server nginx/1.8.1 is not blacklisted
+< Server: nginx/1.8.1
+< Date: Fri, 21 Apr 2017 05:42:58 GMT
+< Content-Type: text/html
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+<
+22839
+8664
+* Connection #0 to host 192.168.1.13 left intact
+	
